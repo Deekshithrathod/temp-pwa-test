@@ -4,18 +4,20 @@ import "./App.css";
 
 function App() {
   const [count, setCount] = useState(0);
-  const [text, setText] = useState("");
+
+  const sendNotification = () => {
+    new Notification("Not Title", {
+      body: "Notification Body",
+      icon: "logo.png",
+    });
+  };
   const handleNotifyClick = () => {
     setCount((prevCount) => prevCount + 1);
     if ("Notification" in window) {
-      setText("Notification Clicked");
       Notification.requestPermission().then((permission) => {
         if (permission === "granted") {
-          setText((prev) => prev + "haspermission Clicked");
-          new Notification("Not Title", {
-            body: "Notification Body",
-            icon: "logo.png", // Path to your notification icon
-          });
+          sendNotification();
+          setTimeout(sendNotification, 5000);
         }
       });
     }
@@ -23,12 +25,11 @@ function App() {
   return (
     <div className="App">
       <p>You clicked {count} times</p>
-      <p>{text}</p>
       <button onClick={handleNotifyClick}>Notify Me</button>
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.tsx</code> and save to reload.
+          From server Edit <code>src/App.tsx</code> and save to reload.
         </p>
         <a
           className="App-link"
