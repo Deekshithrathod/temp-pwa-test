@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 
 function App() {
+  const [count, setCount] = useState(0);
   const handleNotifyClick = () => {
+    setCount((prevCount) => prevCount + 1);
     if ("Notification" in window) {
       Notification.requestPermission().then((permission) => {
         if (permission === "granted") {
@@ -17,6 +19,7 @@ function App() {
   };
   return (
     <div className="App">
+      <p>You clicked {count} times</p>
       <button onClick={handleNotifyClick}>Notify Me</button>
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
