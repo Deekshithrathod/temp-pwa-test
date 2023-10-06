@@ -1,10 +1,23 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import logo from "./logo.svg";
+import "./App.css";
 
 function App() {
+  const handleNotifyClick = () => {
+    if ("Notification" in window) {
+      Notification.requestPermission().then((permission) => {
+        if (permission === "granted") {
+          new Notification("Not Title", {
+            body: "Notification Body",
+            icon: "logo.png", // Path to your notification icon
+          });
+        }
+      });
+    }
+  };
   return (
     <div className="App">
+      <button onClick={handleNotifyClick}>Notify Me</button>
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
@@ -14,8 +27,7 @@ function App() {
           className="App-link"
           href="https://reactjs.org"
           target="_blank"
-          rel="noopener noreferrer"
-        >
+          rel="noopener noreferrer">
           Learn React
         </a>
       </header>
